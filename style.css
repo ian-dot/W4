@@ -1,0 +1,30 @@
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+}
+#question {
+    text-align: center;                
+}
+
+#brief {
+    text-align: center;                
+    font-weight: 100;
+    
+}
+
+.button {
+    text-align: center;   
+    border: .05rem solid blue;
+    border-radius: 8px;
+    /* padding: 4px; */
+    width: fit-content;
+    margin-left: 25%;
+    cursor: pointer;  
+    font-family: inherit; 
+    background-image: linear-gradient(rgba(32, 106, 224, 0.3) 0%,rgba(32, 106, 224, 0.6) 100%);         
+}
+
+.button:hover {
+    border: blue solid .05rem;
+    box-shadow: inset 0px 0px 8px rgba(32, 106, 224, 1), 0 0 15px rgba(32, 106, 224, 1);
+    
+}
