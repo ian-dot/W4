@@ -45,68 +45,89 @@ var setQuestions = [
         ]
     },
     {
-        actualQuestion: "APIs in client side",
+        actualQuestion: "Inside which HTML element do we put the JavaScript?",
         actualSetAnswers : [
             {
-                ans: "Ans2.1",
+                ans: "<javascript>",
                 correct : false                    
             },
             {
-                ans: "Ans2.2",
+                ans: "<scripting>",
                 correct : false                    
             },
             {
-                ans: "Ans2.3",
+                ans: "<script>",
                 correct : true                    
             },
             {
-                ans: "Ans2.4",
+                ans: "<js>",
                 correct : false                    
             }
         ]
     },
     {
-        actualQuestion: "How is sth sth?",
+        actualQuestion: "What is the correct JavaScript syntax to change the content of the following HTML element?\n<p id='demo'>This is a demonstration.</p>",
         actualSetAnswers : [
             {
-                ans: "Ans3.1",
+                ans: "#demo.innerHTML = 'Hello World!'",
                 correct : false                    
             },
             {
-                ans: "Ans3.2",
+                ans: "document.getElementByName('p').innerHTML = 'Hello World'",
                 correct : false                    
             },
             {
-                ans: "Ans3.3",
+                ans: "document.getElement('p').innerHTML = 'Hello World'",
                 correct : false                    
             },
             {
-                ans: "Ans3.4",
+                ans: "document.getElementById('p').innerHTML = 'Hello World'",
                 correct : true                    
             }
         ]
     },
     {
-        actualQuestion: "Who would sth sth?",
+        actualQuestion: "How do you write 'Hello World' in an alert box?",
         actualSetAnswers : [
             {
-                ans: "Ans4.1",
+                ans: "msg('Hello World');",
                 correct : false                    
             },
             {
-                ans: "Ans4.2",
+                ans: "msgBox('Hello World');",
+                correct : false                    
+            },
+            {
+                ans: "alert('Hello World');",
                 correct : true                    
             },
             {
-                ans: "Ans4.3",
-                correct : false                    
-            },
-            {
-                ans: "Ans4.4",
+                ans: "alertBox('Hello World');",
                 correct : false                    
             }
         ]
-        }
+        },
+        {
+            actualQuestion: "What is the correct way to write a JavaScript array?",
+            actualSetAnswers : [
+                {
+                    ans: "var colors = ['red', 'green', 'blue']",
+                    correct : true                    
+                },
+                {
+                    ans: "var colors = 'red' , 'green', 'blue'",
+                    correct : false                    
+                },
+                {
+                    ans: "var colors = 1 = ('red'),2 = ('green'),3 = ('blue')",
+                    correct : false                    
+                },
+                {
+                    ans: "var colors = (1:'red', 2:'green', 3:'blue')",
+                    correct : false                    
+                }
+            ]
+            }
     ]
     
     function renderHighScore(){
@@ -326,7 +347,7 @@ var setQuestions = [
             // Validation when the user did not beat the previous high score
             if (playerAndScore !== null && secondsLeft<playerAndScore.time) {
                 console.log("You didn't beat the high score time though")
-                brief.textContent="You didn't beat the high score time though"
+                brief.textContent="Unfortunately you didn't beat the high score time."
                 brief.setAttribute('style', 'display: block');
                 startBtn.setAttribute('style', 'display: block');
                 startBtn.textContent = 'Play Again!';
