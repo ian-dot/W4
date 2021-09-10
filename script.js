@@ -1,5 +1,5 @@
 var question = document.querySelector('#question');
-var ansContainer = document.querySelector('.container');
+var ansContainer = document.querySelector('#container');
 var brief = document.querySelector('#brief');
 var note = document.querySelector('#note');
 var highScore = document.querySelector('#highScore');
@@ -16,8 +16,9 @@ var label = document.createElement('label');
 var timeHighScore
 var nameHighScore
 
-const container = document.querySelectorAll('.container p');
+const container = document.querySelectorAll('#container p');
 var startBtn = document.createElement('button');
+var formDiv = document.createElement('div');
 var counter = 0
 var timerInterval
 var secondsLeft
@@ -115,29 +116,33 @@ var setQuestions = [
         
     }
     function init(){
+        // Clears the text of the high score
         highScore.textContent='';
+        // Requires the data from local storage of high score
         playerAndScore = JSON.parse(localStorage.getItem("playerAndScore"));
-        // Get stored High Score from localStorage
-        // If high score was retrieved from localStorage, update the high score var to it
+        // If high score was retrieved from localStorage, updates the high score var value to it
         if (playerAndScore !== null) {
             highScore.textContent = playerAndScore.time;
         }
+        // Function to render high score
         renderHighScore();
         
     };
     
 
     function storeHighScore(playerAndScore) {
-        // Stringify and set key in localStorage to todos array
+        // Stringify and set key in localStorage
         localStorage.setItem("playerAndScore", JSON.stringify(playerAndScore));
     }
 
         
     function startGame(){
-
+        // Clears the page to set the game from the beginning 
         setGame();
+        // Welcomes the user with this text
         question.textContent='Welcome to Javascript Quiz';
-        brief.textContent='Answer the following questions before the time is up. \nGood luck!';
+        // Instructions for playing
+        brief.textContent='Answer the following questions before the time is up. \nFor every wrong answer you get minus 5 seconds in the timer.\nGood luck!';
         startBtn.textContent = 'Start Quiz';
         startBtn.classList.add('button');
         document.body.append(startBtn);  
@@ -181,14 +186,18 @@ var setQuestions = [
     }
     
     function startQuiz() { 
+        init();
         // Set the time for the quiz
         secondsLeft = 50
         // Call setTime function
         setTime();
         // Set the counter to 1 so we can keep the count to know on which question we are
         counter = 1;
-        // Hides the button, the brief and the note
+        // Hides the start button, the brief and the note
         startBtn.setAttribute('style', 'display: none');
+        btnName.setAttribute('style', 'display: none');
+        label.setAttribute('style', 'display: none');
+        playerName.setAttribute('style', 'display: none');
         brief.setAttribute('style', 'display: none');
         note.setAttribute('style', 'display: none');
         note.textContent = "";
@@ -231,15 +240,20 @@ var setQuestions = [
     }
 
     function renderForm() {
+        $(playerName).css('display','flex');
+        $(btnName).css('display','flex','margin-left','5%')
+        label.setAttribute('style', 'display: block');
+        $(playerName).addClass("col-4");
+        // btnName.setAttribute('style', 'display: block');
+        label.setAttribute('for','name');
+        label.setAttribute('style','margin-left:25%');
+        // btnName.setAttribute('style','margin-left:5%');                
         label.textContent = 'Name';
-                label.setAttribute('for','name');
-                label.setAttribute('style','margin-left:25%');
-                btnName.setAttribute('style','margin-left:5%');                
-                btnName.textContent = 'Save';
-                btnName.classList.add('button');
-                document.body.children[1].append(label)
-                document.body.children[1].append(playerName)
-                document.body.children[1].append(btnName)
+        btnName.textContent = 'Save';
+        btnName.classList.add('button');
+        document.body.children[1].children[0].children[0].append(label)
+        document.body.children[1].children[0].children[0].append(playerName)
+        document.body.children[1].children[0].children[0].append(btnName)
 
     }
     
@@ -266,7 +280,7 @@ var setQuestions = [
             setGame();
             question.textContent='You won!';
             clearInterval(timerInterval);
-            // if there
+            // Validation when there's already a high score set
             if (playerAndScore !== null && secondsLeft>playerAndScore.time) {
                 
                 renderForm();
@@ -283,7 +297,10 @@ var setQuestions = [
                     startBtn.textContent = 'Play Again!';
                 });
             };
+            // Validation when there is no previous high score set
             if (playerAndScore==null){
+                brief.setAttribute('style', 'display: flex');
+                brief.textContent='You hit a new high score, write your name.'
                 renderForm();
                 btnName.addEventListener("click", function() {
                     console.log('event listener works')
@@ -295,6 +312,10 @@ var setQuestions = [
                     playerAndScore.name = playerName.value.trim();
                     
                     storeHighScore(playerAndScore);
+                    // Hide the form
+                    $(playerName).css('display','none');
+                    $(btnName).css('display','none','margin-left','5%')
+                    label.setAttribute('style', 'display: none');
                     // Let the user know that the high score was saved
                     brief.setAttribute('style', 'display: block');
                     brief.textContent='High Score saved'
@@ -302,13 +323,13 @@ var setQuestions = [
                     startBtn.textContent = 'Play Again!';
                 });
             }
-            if (playerAndScore !== null && secondsLeft>playerAndScore.time){
+            // Validation when the user did not beat the previous high score
+            if (playerAndScore !== null && secondsLeft<playerAndScore.time) {
+                console.log("You didn't beat the high score time though")
                 brief.textContent="You didn't beat the high score time though"
                 brief.setAttribute('style', 'display: block');
                 startBtn.setAttribute('style', 'display: block');
                 startBtn.textContent = 'Play Again!';
-
-
             }
             
         }
